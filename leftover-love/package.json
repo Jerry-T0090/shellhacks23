@@ -20,6 +20,7 @@
   "dependencies": {
     "@capacitor/android": "^5.4.0",
     "@capacitor/core": "^5.4.0",
+    "@solidjs/router": "^0.8.3",
     "solid-js": "^1.7.6"
   }
 }
