@@ -15,14 +15,12 @@ export default function BasicAppBar() {
 
   return (
     <>
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" class = "fill-burnt-sienna" sx={{ boxShadow: 'none' }}>
+    <Box sx={{ flexGrow: 1 ,  padding: '10px', backgroundColor: "#D77A61"}}>
+      <AppBar position="static" sx={{ boxShadow: 'none', backgroundColor: "#D77A61"}}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', fontSize: '4rem' }}>
           Leftover Love
           </Typography>
-
-          
           <IconButton
             title="Account settings"
             onClick={(event) => setAnchorEl(event.currentTarget)}
@@ -35,6 +33,7 @@ export default function BasicAppBar() {
             <Avatar
               alt="Remy Sharp"
               src="https://mui.com/static/images/avatar/1.jpg"
+              sx={{ width: '4rem', height: '4rem' }}
             />
           </IconButton>
           
