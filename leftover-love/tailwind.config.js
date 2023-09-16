@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.{html,scss}', './src/**/*.{tsx,scss}'],
+  content: ["./src/**/*.{ts,tsx}"],
+  important: "#root",
   theme: {
     colors: {
       gunmetal: "#223843ff",
@@ -10,10 +11,9 @@ module.exports = {
       timberwolf: "#dbd3d8ff",
       "desert-sand": "#d8b4a0ff",
       "atomic-tangerine": "#d89781ff",
-      "burnt-sienna": "#d77a61ff", 
+      "burnt-sienna": "#d77a61ff",
     },
     extend: {},
   },
   plugins: [],
-}
-
+};

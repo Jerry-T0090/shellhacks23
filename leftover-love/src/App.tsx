@@ -12,6 +12,7 @@ const BaseRedirect = () => {
 const routes: RouteDefinition[] = [
   { path: "/login", component: Login },
   { path: "/", component: BaseRedirect },
+  { path: "/logout", component: BaseRedirect },
   { path: "/home", component: Dashboard },
 ];
 

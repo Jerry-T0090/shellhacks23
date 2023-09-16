@@ -7,6 +7,9 @@ const Login = () => {
 
   return (
     <>
+      <div class="text-burnt-sienna bg-burnt-sienna absolute right-0">
+        Testing tailwind
+      </div>
       <Input
         type="password"
         name="password"
