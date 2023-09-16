@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.{html,scss}', './src/**/*.{tsx,scss}'],
+  content: ["./src/*/.{ts,tsx}"],
   theme: {
     colors: {
       gunmetal: "#223843ff",
