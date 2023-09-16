@@ -10,3 +10,4 @@
 
 1. Activate venv using command
 2. Install dependencies using command pip install -r requirements.txt
+3. flask run
