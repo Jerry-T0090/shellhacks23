@@ -25,10 +25,9 @@ const SquareButton = styled(Button)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
-  // Define a signal to store your MongoDB data with a type annotation
   const [data, setData] = createSignal<{ id: number; name: string; description: string; servings: number; image: string }[]>([]);
 
-  // Function to fetch data from MongoDB
+  // Fetcher
   const fetchData = async () => {
     try {
       const response = await fetch("YOUR_API_ENDPOINT_HERE"); // Replace with API endpoint
@@ -42,7 +41,7 @@ const Dashboard = () => {
     }
   };
 
-  // Call fetchData when the component mounts
+  // OG Fetch
   onCleanup(() => {
     fetchData();
   });

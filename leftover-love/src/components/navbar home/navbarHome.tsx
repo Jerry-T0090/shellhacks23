@@ -1,5 +1,6 @@
 import { Avatar } from '@suid/material';
 import Logout from "@suid/icons-material/Logout";
+import { A } from "@solidjs/router";
 
 import { AppBar, Box, IconButton, Toolbar, Typography,  Menu,
   MenuItem,
@@ -18,8 +19,9 @@ export default function BasicAppBar() {
     <Box sx={{ flexGrow: 1 ,  padding: '10px', backgroundColor: "#D77A61"}}>
       <AppBar position="static" sx={{ boxShadow: 'none', backgroundColor: "#D77A61"}}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', fontSize: '4rem' }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', fontSize: '4rem' }}><A href="/home">
           Leftover Love
+          </A>
           </Typography>
           <IconButton
             title="Account settings"
@@ -83,7 +85,7 @@ export default function BasicAppBar() {
     }}
   >
     <MenuItem>
-      <Avatar /> Profile
+      <Avatar /> <A href="/profile">Profile</A>
     </MenuItem>
     <Divider />
     <MenuItem>
