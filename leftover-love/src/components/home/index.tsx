@@ -10,7 +10,6 @@ import {
   Grid,
 } from "@suid/material";
 
-// Define a styled Paper component for each item with a barely visible gray background
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(2),
@@ -18,19 +17,19 @@ const Item = styled(Paper)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   color: theme.palette.text.secondary,
-  background: "rgba(200, 200, 200, 0.1)", // Barely visible gray background
+  background: 'rgba(200, 200, 200, 0.1)',
 }));
 
 const ButtonContainer = styled("div")(({ theme }) => ({
-  height: "100%", // Match the height of the stack item
+  height: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 }));
 
 const SquareButton = styled(Button)(({ theme }) => ({
-  width: "100%", // Make the button square
-  height: "100%", // Make the button square
+  width: "100%",
+  height: "100%",
 }));
 
 const Dashboard = () => {
@@ -39,52 +38,23 @@ const Dashboard = () => {
     { id: number; name: string; description: string; image: string }[]
   >([]);
 
-  // Simulate fetching data from MongoDB (replace with your actual data fetching logic)
-  setTimeout(() => {
-    const fetchedData = [
-      {
-        id: 1,
-        name: "Item 1",
-        description: "Description 1",
-        image:
-          "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg",
-      },
-      {
-        id: 2,
-        name: "Item 2",
-        description: "Description 2",
-        image:
-          "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg",
-      },
-      {
-        id: 3,
-        name: "Item 3",
-        description: "Description 3",
-        image:
-          "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg",
-      },
-      {
-        id: 4,
-        name: "Item 4",
-        description: "Description 4",
-        image:
-          "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg",
-      },
-      {
-        id: 5,
-        name: "Item 5",
-        description: "Description 5",
-        image:
-          "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg",
-      },
-      // Add more items as needed
-    ];
-    setData(fetchedData);
-  }, 1000); // Simulated delay for demonstration purposes
+  // Fetcher
+  const fetchData = async () => {
+    try {
+      const response = await fetch("YOUR_API_ENDPOINT_HERE"); // Replace with API endpoint
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  // Cleanup when the component unmounts
+  // OG Fetch
   onCleanup(() => {
-    // Cleanup logic (if needed)
+    fetchData();
   });
 
   return (
