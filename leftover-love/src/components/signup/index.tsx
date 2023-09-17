@@ -3,6 +3,7 @@ import { TextInput, validators } from "./validation";
 import { createFormControl, createFormGroup } from "solid-forms";
 import { Checkbox } from "@suid/material";
 import { Show, createSignal } from "solid-js";
+import { PostUser } from "../../services/user";
 
 const Signup = () => {
   const group = createFormGroup({
@@ -26,6 +27,13 @@ const Signup = () => {
       required: true,
       validators: [validators.required, validators.email],
     }),
+    organizationName: createFormControl("Organization Name"),
+    streetAddress: createFormControl("Street Address"), 
+    city: createFormControl("City"),
+    state: createFormControl("State"),
+    zip: createFormControl("Zip"), 
+    websiteURL: createFormControl("Website URL"),
+    descriptionOfItems: createFormControl("Description of Items"),
   });
 
   const [supplier, setSupplier] = createSignal(false);
@@ -33,9 +41,47 @@ const Signup = () => {
     if (group.isSubmitted || !group.isValid) return;
     console.log(group.value);
 
-    // Todo submit to DB
-    // Submit to auth0
-    // navigate to home page
+    const isSupplier = supplier();
+
+    const user = {
+      _id: "",
+      name: group.controls.firstName.value +" "+ group.controls.lastName.value,
+      email: group.controls.email.value,
+      phone: "",
+      profileB64:"",
+      // reEnterEmail: group.controls.reEnterEmail.value,
+      organizationName: isSupplier ? group.controls.organizationName.value || '' : undefined,
+      streetaddress: isSupplier ? group.controls.streetAddress.value || '' : undefined,
+      city: isSupplier ? group.controls.city.value || '' : undefined,
+      state: isSupplier ? group.controls.state.value || '' : undefined,
+      zip: isSupplier ? group.controls.zip.value || '' : undefined,
+      websiteURL: isSupplier ? group.controls.websiteURL.value || '' : undefined,
+      description: isSupplier ? group.controls.descriptionOfItems.value || '' : undefined,
+    };
+    
+    try {
+      // Call the PostUser function to submit the user data to the database
+      const result = await PostUser(user);
+
+      if (result === true) {
+        // The user was successfully added to the database
+        // Now you can proceed with other steps like submitting to auth0 and navigating to the home page
+        // ...
+
+        // For example, you can navigate to the home page using window.location.href
+        window.location.href = '/home';
+      } else {
+        // Handle the error case here
+        console.error("Error occurred while posting user data:", result);
+        // You can display an error message to the user or take other appropriate actions
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      // Handle unexpected errors here
+    }
+
+
+    
   };
 
   return (
