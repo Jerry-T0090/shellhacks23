@@ -13,32 +13,32 @@ except pymongo.errors.ConfigurationError:
 leftover_love_db = client.leftover_love_db
 
 # collection_ops
-def modify_collection(collection, operation, query=None):
+def modify_collection(collection, operation, **kwargs):
   try: 
     if operation == "add":
-      additions = collection.insert_many(query) 
-      return f"{additions.count} new additions to {collection.name}"
+      additions = collection.insert_many(kwargs["query"]) 
+      return len(additions.inserted_ids)
     elif operation == "search":
-      if query == "all":
+      if kwargs["query"] == "all":
         finds = collection.find()
       else:
-        finds = collection.find(query)
-      return [finds]
+        finds = collection.find(kwargs["query"])
+      return [doc for doc in finds]
     elif operation == "update":
-      updates = collection.update_many(query, new=True)
-      return f"Made {updates.count} updates.\nUpdates: {updates}"
+      updates = collection.update_many(kwargs["query"], kwargs["update"])
+      return updates.matched_count, updates.modified_count
     elif operation == "delete":
-      deletes = collection.delete_many(query)
-      return f"Deleted {deletes.count}.\nItems deleted: {deletes}"
+      deletes = collection.delete_many(kwargs["query"])
+      return deletes.deleted_count
     else:
      raise Exception(f"Invalid Operation: {operation}")
-  except BaseException as e:
-    raise Exception(f"An Unexpected Error Occurred: {e}")
+  except Exception as e:
+    raise Exception(f"An Unexpected Error Occurred: {str(e)}")
 
 # one_point database_ops
-def perform_db_operation(collection_name, operation, query=None):
+def perform_db_operation(collection_name, operation, **kwargs):
   collection = leftover_love_db[collection_name]
-  modify_collection(collection, operation, query)
+  return modify_collection(collection, operation, **kwargs)
 
 
   
@@ -50,5 +50,11 @@ def perform_db_operation(collection_name, operation, query=None):
   # 5. Other errors
 
 
-print(perform_db_operation("recipient", "search", "all"))
+# print(perform_db_operation("recipient", "search", "all"))
+# print(perform_db_operation("recipient", "search", {'_id': "string-from-twilo"}))
+# print(perform_db_operation("recipient", "add", [{'_id': 'a1aa1', 'name': "BFRRR"}, {'_id': 'sqa1', 'name': "ZAA"}]))
+# print(perform_db_operation("recipient", "delete", {'_id': 'a1aa1'}))
+# print(perform_db_operation("recipient", "update", query={'_id': 'sqa1'}, update={'$set': {'name': 'Changed'}}))
+# print(perform_db_operation("recipient", "search", query={'_id': 'sqa1'}))
 
+# Validation for add
