@@ -14,6 +14,7 @@ import {
 
 import { createSignal } from "solid-js";
 import { useAuth0 } from "@rturnq/solid-auth0";
+import { A } from "@solidjs/router";
 
 export default function BasicAppBar() {
   const auth = useAuth0();
@@ -98,7 +99,7 @@ export default function BasicAppBar() {
         }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar /> <A href="/profile">Profile</A>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => auth?.logout()}>
