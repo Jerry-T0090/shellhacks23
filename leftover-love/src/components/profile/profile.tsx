@@ -1,6 +1,15 @@
-import { createSignal } from "solid-js";
+import { createSignal, onCleanup } from "solid-js";
 import BasicAppBar from "../navbar home/navbarHome";
-import { Stack, Paper, styled, Button } from "@suid/material";
+import {
+  Stack,
+  Paper,
+  styled,
+  Button,
+  Modal,
+  Card,
+  CardContent,
+  TextField,
+} from "@suid/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -13,26 +22,29 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ButtonContainer = styled("div")(({ theme }) => ({
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }));
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
 
 const SquareButton = styled(Button)(({ theme }) => ({
-    width: "100%",
-    height: "100%",
+  width: "100%",
+  height: "100%",
 }));
-  
+
+const CenteredModal = styled(Modal)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
 
 const Profile = () => {
-  // Replace these with actual user data from your application
-  const [userData] = createSignal({
+  const [userData, setUserData] = createSignal({
     email: "user@example.com",
     password: "********",
     phoneNumber: "+1234567890",
     name: "John Doe",
-    // Replace with the URL of the user's profile image
     profileImageURL: "https://mui.com/static/images/avatar/1.jpg",
   });
 
@@ -43,40 +55,132 @@ const Profile = () => {
     { label: "Phone Number", value: userData().phoneNumber },
   ];
 
+  const [editModalOpen, setEditModalOpen] = createSignal(false);
+
+  const openEditModal = () => {
+    setEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+  };
+
+  const handleSaveChanges = () => {
+    //ADD DB logic here to save changes
+    closeEditModal();
+  };
+
+  onCleanup(() => {
+    setUserData({
+      email: "",
+      password: "",
+      phoneNumber: "",
+      name: "",
+      profileImageURL: "",
+    });
+  });
+
   return (
-    <>
-      <BasicAppBar />
-
-      <div style="padding: 20px;">
-        {/* Profile Image */}
-        <div style="margin-bottom: 20px; ">
-          <img
-            src={userData().profileImageURL}
-            alt="Profile"
-            style="width: 400px; height: auto;"
-          />
+      <>
+        <BasicAppBar />
+  
+        <div style="padding: 20px; display: flex; justify-content: space-between;">
+          {/* Profile Image */}
+          <div>
+            <img
+              src={userData().profileImageURL}
+              alt="Profile"
+              style="width: 400px; height: auto;"
+            />
+          </div>
+  
+          <div style="width: 300px; height: auto;">
+            <ButtonContainer>
+              <SquareButton
+                variant="contained"
+                color="primary"
+                onClick={openEditModal}
+                class = "bg-burnt-sienna"
+              >
+                EDIT
+              </SquareButton>
+            </ButtonContainer>
+          </div>
         </div>
-
+  
         {/* User Details */}
         <Stack spacing={2}>
           {userDetails.map((detail, index) => (
-            <Item key={index}>
+            <Item key={index} style="padding: 30px;">
               <div>
                 <strong>{detail.label}:</strong>
                 <strong>               </strong>
                 <strong>{detail.value}</strong>
               </div>
               <div>
-              <ButtonContainer>
-                  <SquareButton variant="contained" color="primary">EDIT</SquareButton>
-                </ButtonContainer>
+                 
               </div>
             </Item>
           ))}
         </Stack>
-      </div>
-    </>
-  );
-};
-
-export default Profile;
+  
+        {/* Edit Modal */}
+        <CenteredModal open={editModalOpen()} onClose={closeEditModal}>
+          <Card>
+            <CardContent>
+              <h2>Edit User Details</h2>
+              <TextField
+                label="Name"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={userData().name}
+                onChange={(e) =>
+                  setUserData({ ...userData(), name: e.target.value })
+                }
+              />
+              <TextField
+                label="Email"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={userData().email}
+                onChange={(e) =>
+                  setUserData({ ...userData(), email: e.target.value })
+                }
+              />
+              <TextField
+                label="Password"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={userData().password}
+                onChange={(e) =>
+                  setUserData({ ...userData(), password: e.target.value })
+                }
+              />
+              <TextField
+                label="Phone Number"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={userData().phoneNumber}
+                onChange={(e) =>
+                  setUserData({ ...userData(), phoneNumber: e.target.value })
+                }
+              />
+              <Button
+                variant="contained"
+                onClick={handleSaveChanges}
+                class = "fill-burnt-sienna"
+              >
+                Save Changes
+              </Button>
+            </CardContent>
+          </Card>
+        </CenteredModal>
+      </>
+    );
+  };
+  
+  export default Profile;

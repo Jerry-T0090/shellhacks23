@@ -24,7 +24,7 @@ const ButtonContainer = styled("div")(({ theme }) => ({
   height: "100%",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "center"
 }));
 
 const SquareButton = styled(Button)(({ theme }) => ({
