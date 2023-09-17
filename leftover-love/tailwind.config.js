@@ -13,7 +13,11 @@ module.exports = {
       "atomic-tangerine": "#d89781ff",
       "burnt-sienna": "#d77a61ff",
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        logo: "url('/src/assets/Designer.gif')",
+      },
+    },
   },
   plugins: [],
 };

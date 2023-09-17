@@ -9,6 +9,7 @@ import {
   Box,
   Grid,
 } from "@suid/material";
+import { useAuth0 } from "@rturnq/solid-auth0";
 
 // Define a styled Paper component for each item with a barely visible gray background
 const Item = styled(Paper)(({ theme }) => ({
@@ -34,6 +35,11 @@ const SquareButton = styled(Button)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
+  const auth = useAuth0();
+  // console.log(auth?.auth0Client()?.getUser());
+  // console.log(auth?.getToken());
+  // auth?.isAuthenticated()
+
   // Define a signal to store your MongoDB data with a type annotation
   const [data, setData] = createSignal<
     { id: number; name: string; description: string; image: string }[]

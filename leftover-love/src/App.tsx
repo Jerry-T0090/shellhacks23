@@ -3,6 +3,7 @@ import { Component } from "solid-js";
 import Login from "./components/login";
 import Dashboard from "./components/home";
 import Signup from "./components/signup";
+import Pending from "./components/pending-state/pending";
 
 const BaseRedirect = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const routes: RouteDefinition[] = [
   { path: "/", component: BaseRedirect },
   { path: "/logout", component: BaseRedirect },
   { path: "/home", component: Dashboard },
-  {path: "/signup", component: Signup}
+  { path: "/signup", component: Signup },
+  { path: "pending", component: Pending },
 ];
 
 const App: Component = () => {
