@@ -3,6 +3,13 @@ import { useNavigate } from "@solidjs/router";
 import { CircularProgress } from "@suid/material";
 import { Match, Switch, createEffect, createSignal, onMount } from "solid-js";
 import BasicAppBar from "../navbar home/navbarHome";
+import {
+  getUser,
+  User,
+  RestaurantUser,
+  isUser,
+  isRestaurantUser,
+} from "../../services/user";
 
 const Pending = () => {
   const auth = useAuth0();
@@ -22,11 +29,15 @@ const Pending = () => {
   });
   const isUserNew = async () => {
     const user = await auth?.auth0Client()?.getUser();
-    console.log(user);
-    if (user) setSignup(false);
-    // Todo check DB for user info
-    // if no info
-    // setSignup(true)
+    if (user) {
+      const res1 = await getUser(user.sub, false);
+      const res2 = await getUser(user.sub, true);
+      if (isUser(res1) || isRestaurantUser(res2)) {
+        setSignup(false);
+        return;
+      }
+      setSignup(true);
+    }
   };
 
   return (
