@@ -111,7 +111,7 @@ const Profile = () => {
         {/* User Details */}
         <Stack spacing={2}>
           {userDetails.map((detail, index) => (
-            <Item key={index} style="padding: 30px;">
+            <Item key={index} style="padding: 30px;" >
               <div>
                 <strong>{detail.label}:</strong>
                 <strong>               </strong>
@@ -128,7 +128,7 @@ const Profile = () => {
         <CenteredModal open={editModalOpen()} onClose={closeEditModal}>
           <Card>
             <CardContent>
-              <h2>Edit User Details</h2>
+              <h2>Edit Your Info Below</h2>
               <TextField
                 label="Name"
                 fullWidth
