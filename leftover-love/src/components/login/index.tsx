@@ -1,15 +1,12 @@
 import { useAuth0 } from "@rturnq/solid-auth0";
 import LoginButton from "./loginButton";
-import { Input, TextField } from "@suid/material";
+import { Input } from "@suid/material";
 
 const Login = () => {
   const auth = useAuth0();
 
   return (
     <>
-      <div class="text-burnt-sienna bg-burnt-sienna absolute right-0">
-        Testing tailwind
-      </div>
       <Input
         type="password"
         name="password"
