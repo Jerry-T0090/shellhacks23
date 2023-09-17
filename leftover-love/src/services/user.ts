@@ -19,8 +19,11 @@ const errorWrapper = (err: string) => {
   return new Error("Fetch failed: " + err);
 };
 
-const isRestaurantUser = (obj: object): obj is RestaurantUser => {
+export const isRestaurantUser = (obj: object): obj is RestaurantUser => {
   return "description" in obj;
+};
+export const isUser = (obj: object): obj is RestaurantUser => {
+  return "name" in obj;
 };
 
 const endpoint = (
@@ -34,7 +37,7 @@ const endpoint = (
 export const getUser = async (
   id: string,
   restaurant: boolean
-): Promise<User | Error> => {
+): Promise<User | RestaurantUser | Error> => {
   return fetch(
     endpoint(undefined, restaurant) +
       new URLSearchParams({
@@ -44,7 +47,8 @@ export const getUser = async (
     .then(async (res: Response) => {
       if (!res.ok) return errorWrapper(res.statusText);
       const user = await res.json();
-      return user as User;
+      if (isRestaurantUser(user)) return user as User;
+      return user as RestaurantUser;
     })
     .catch((err) => {
       return errorWrapper(err);
