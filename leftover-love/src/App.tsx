@@ -2,6 +2,7 @@ import { RouteDefinition, useNavigate, useRoutes } from "@solidjs/router";
 import { Component } from "solid-js";
 import Login from "./components/login";
 import Dashboard from "./components/home";
+import Signup from "./components/signup";
 import Profile from "./components/profile/profile";
 
 const BaseRedirect = () => {
@@ -13,7 +14,9 @@ const BaseRedirect = () => {
 const routes: RouteDefinition[] = [
   { path: "/login", component: Login },
   { path: "/", component: BaseRedirect },
+  { path: "/logout", component: BaseRedirect },
   { path: "/home", component: Dashboard },
+  {path: "/signup", component: Signup}
   { path: "/profile", component: Profile },
 ];
 

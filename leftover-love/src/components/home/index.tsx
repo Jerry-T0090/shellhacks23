@@ -1,13 +1,21 @@
-import { createSignal, onCleanup } from "solid-js";
-import BasicAppBar from '../navbar home/navbarHome';
-import { Stack, Typography, Paper, styled, Button, Grid } from "@suid/material";
+import { For, createSignal, onCleanup } from "solid-js";
+import BasicAppBar from "../navbar home/navbarHome";
+import {
+  Stack,
+  Typography,
+  Paper,
+  styled,
+  Button,
+  Box,
+  Grid,
+} from "@suid/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(2),
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   color: theme.palette.text.secondary,
   background: 'rgba(200, 200, 200, 0.1)',
 }));
@@ -25,7 +33,10 @@ const SquareButton = styled(Button)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
-  const [data, setData] = createSignal<{ id: number; name: string; description: string; servings: number; image: string }[]>([]);
+  // Define a signal to store your MongoDB data with a type annotation
+  const [data, setData] = createSignal<
+    { id: number; name: string; description: string; image: string }[]
+  >([]);
 
   // Fetcher
   const fetchData = async () => {
@@ -49,32 +60,37 @@ const Dashboard = () => {
   return (
     <>
       <BasicAppBar />
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '40px 40px 20px 40px' }}>
-        <Typography variant="h3" style={{ marginBottom: '20px' }}>Food Near You</Typography>
-        <div style={{ flex: 1 }}></div>
-         <Button variant="contained" color="primary" onClick={fetchData}>Refresh</Button> 
+      <div style={{ padding: "40px 40px 20px 40px" }}>
+        <Typography variant="h3" class="mb-5">
+          Food Near You
+        </Typography>
+        <Stack spacing={2}>
+          <For each={data()}>
+            {(item) => (
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={3}>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={{ width: "100%" }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h5">{item.name}</Typography>
+                  <Typography>{item.description}</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <ButtonContainer>
+                    <SquareButton variant="contained" color="primary">
+                      Gimme Gimme!
+                    </SquareButton>
+                  </ButtonContainer>
+                </Grid>
+              </Grid>
+            )}
+          </For>
+        </Stack>
       </div>
-      <Stack spacing={2}>
-        {data().map((item) => (
-          <Item key={item.id}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={3}>
-                <img src={item.image} alt={item.name} style={{ width: '100%' }} />
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h5">{item.name}</Typography>
-                <Typography>{item.description}</Typography>
-                <Typography>Servings: {item.servings}</Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <ButtonContainer>
-                  <SquareButton variant="contained" color="primary">Gimme Gimme!</SquareButton>
-                </ButtonContainer>
-              </Grid>
-            </Grid>
-          </Item>
-        ))}
-      </Stack>
     </>
   );
 };
