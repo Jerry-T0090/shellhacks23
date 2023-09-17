@@ -11,6 +11,7 @@ import {
   Grid,
   Modal,
 } from "@suid/material";
+import { useAuth0 } from "@rturnq/solid-auth0";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,

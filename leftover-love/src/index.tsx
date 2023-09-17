@@ -14,15 +14,16 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
+
+
 render(
   () => (
     <>
-      {console.log(window.location.origin)}
       <Auth0
         domain="dev-indy43k3akg7igov.us.auth0.com"
         clientId="AdkpMo0lql88Y9SCJzu3vbFkDMrNDbNC"
         logoutRedirectUri={`${window.location.origin}/logout`} // Absolute URI Auth0 logout redirect
-        loginRedirectUri={`${window.location.origin}/#/home`} // Absolute URI Auth0 login
+        loginRedirectUri={`${window.location.origin}/#/pending`} // Absolute URI Auth0 login
       >
         <Router source={hashIntegration()}>
           <App />
