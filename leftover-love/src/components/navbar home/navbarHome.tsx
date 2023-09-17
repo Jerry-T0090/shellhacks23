@@ -29,7 +29,7 @@ export default function BasicAppBar() {
         <AppBar
           position="static"
           class="fill-burnt-sienna"
-          sx={{ boxShadow: "none" }}
+          sx={{ boxShadow: "none", backgroundColor: "#d77a61ff"}}
         >
           <Toolbar>
             <Typography
@@ -37,7 +37,7 @@ export default function BasicAppBar() {
               component="div"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              Leftover Love
+              <A href="/home">Leftover Love</A>
             </Typography>
 
             <IconButton
