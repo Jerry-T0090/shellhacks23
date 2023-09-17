@@ -1,102 +1,99 @@
-import { createSignal } from "solid-js";
-import {
-  Typography,
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
+import { Avatar } from '@suid/material';
+import Logout from "@suid/icons-material/Logout";
+
+import { AppBar, Box, IconButton, Toolbar, Typography,  Menu,
   MenuItem,
-  Avatar,
-} from "@material-tailwind/react";
-import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+  ListItemIcon,
+  Divider, } from '@suid/material';
 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-  },
-  {
-    label: "Edit Profile",
-  },
-  {
-    label: "Inbox",
-  },
-  {
-    label: "Help",
-  },
-  {
-    label: "Sign Out",
-  },
-];
+import { createSignal } from "solid-js";
 
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = createSignal(false);
-
-  const closeMenu = () => setIsMenuOpen(false);
+export default function BasicAppBar() {
+  const [anchorEl, setAnchorEl] = createSignal<null | HTMLElement>(null);
+  const open = () => Boolean(anchorEl());
+  const handleClose = () => setAnchorEl(null);
 
   return (
-    <Menu open={isMenuOpen()} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="tania andrew"
-            className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-          />
-          <ChevronDownIcon
-            strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen() ? "rotate-180" : ""
-            }`}
-          />
-        </Button>
-      </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
-    </Menu>
-  );
-}
+    <>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" class = "fill-burnt-sienna" sx={{ boxShadow: 'none' }}>
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+          Leftover Love
+          </Typography>
 
-export function ComplexNavbar() {
-  return (
-    <div class="header">
-      <Typography
-        as="a"
-        href="#"
-        className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-      >
-        Material Tailwind
-      </Typography>
-      <ProfileMenu />
-    </div>
-  );
+          
+          <IconButton
+            title="Account settings"
+            onClick={(event) => setAnchorEl(event.currentTarget)}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open() ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open() ? "true" : undefined}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src="https://mui.com/static/images/avatar/1.jpg"
+            />
+          </IconButton>
+          
+
+        </Toolbar>
+      </AppBar>
+    </Box>
+    <Menu
+    anchorEl={anchorEl()}
+    id="account-menu"
+    open={open()}
+    onClose={handleClose}
+    onClick={handleClose}
+    PaperProps={{
+      elevation: 0,
+      sx: {
+        overflow: "visible",
+        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+        mt: 1.5,
+        ["& .MuiAvatar-root"]: {
+          width: 32,
+          height: 32,
+          ml: -0.5,
+          mr: 1,
+        },
+        "&:before": {
+          content: '""',
+          display: "block",
+          position: "absolute",
+          top: 0,
+          right: 14,
+          width: 10,
+          height: 10,
+          bgcolor: "background.paper",
+          transform: "translateY(-50%) rotate(45deg)",
+          zIndex: 0,
+        },
+      },
+    }}
+    transformOrigin={{
+      horizontal: "right",
+      vertical: "top",
+    }}
+    anchorOrigin={{
+      horizontal: "right",
+      vertical: "bottom",
+    }}
+  >
+    <MenuItem>
+      <Avatar /> Profile
+    </MenuItem>
+    <Divider />
+    <MenuItem>
+      <ListItemIcon>
+        <Logout fontSize="small" />
+      </ListItemIcon>
+      Logout
+    </MenuItem>
+  </Menu>
+</>
+);
 }
