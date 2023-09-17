@@ -26,7 +26,7 @@ def modify_collection(collection, operation, **kwargs):
       return [doc for doc in finds]
     elif operation == "update":
       updates = collection.update_many(kwargs["query"], kwargs["update"])
-      return updates.matched_count, updates.modified_count
+      return updates.modified_count, updates.matched_count
     elif operation == "delete":
       deletes = collection.delete_many(kwargs["query"])
       return deletes.deleted_count
